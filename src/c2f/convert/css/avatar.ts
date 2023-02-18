@@ -13,15 +13,20 @@ const setStyle = (css) => {
           let width = '3px'
           let style = 'solid';
           let color = '#000000';
+
+          // borderStyles.indexOf(value) === index
           values.forEach((value) => {
-            if (value.endsWith('px')) {
-              width = value;
-            } else {
-              ['dashed', 'dotted', 'double', 'groove', 'hidden', 'inherit', 'inset', 'outset', 'ridge', 'none'].forEach((val) => {
+            if (value.match(/^[a-z]+$/i)) {
+              const borderStyles = ['dashed', 'dotted', 'double', 'groove', 'hidden', 'inherit', 'inset', 'outset', 'ridge', 'none'];
+              borderStyles.forEach((val) => {
                 if (val === value) {
                   style = value
                 }
               })
+            } else if (value.endsWith('px')) {
+              width = value;
+            } else {
+              color = value
             }
 
           });
