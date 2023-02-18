@@ -1,11 +1,14 @@
-import $ from 'jquery'
-const setStyle = (css) => {
+import Detailcss from "./detailcss";
+const detailcss = new Detailcss();
+const setStyle = async (css) => {
+
   const data: { key: string; val: string }[] = [];
   let c = Object.entries(css)
-    .map(([property, val]) => {
+    .map(async ([property, val]) => {
       let value = `${val}`
       if (property === 'background-color') {
         const rgb = hexToRgb(value)
+        detailcss.add({ key: 'background-color', val: rgb });
         data.push({ key: 'background-color', val: rgb })
       } else
         if (property === 'border') {
@@ -14,7 +17,9 @@ const setStyle = (css) => {
           const width = values[0];
           const style = values[1];
           const color = values[2];
-
+          detailcss.add({ key: 'border-width', val: width });
+          detailcss.add({ key: 'border-style', val: style });
+          detailcss.add({ key: 'border-color', val: color });
           data.push({ key: 'border-width', val: width });
           data.push({ key: 'border-style', val: style });
           data.push({ key: 'border-color', val: color });
@@ -24,12 +29,14 @@ const setStyle = (css) => {
             const values = value.split(' ');
             if (values.length === 1) {
               // return [{ key: 'border-radius', val: value }];
-
+              detailcss.add({ key: 'border-top-left-radius', val: values[0] });
+              detailcss.add({ key: 'border-bottom-right-radius', val: values[0] });
+              detailcss.add({ key: 'border-top-right-radius', val: values[0] });
+              detailcss.add({ key: 'border-bottom-left-radius', val: values[0] });
               data.push({ key: 'border-top-left-radius', val: values[0] });
               data.push({ key: 'border-bottom-right-radius', val: values[0] });
               data.push({ key: 'border-top-right-radius', val: values[0] });
               data.push({ key: 'border-bottom-left-radius', val: values[0] });
-
             }
             if (values.length === 2) {
               return [
@@ -66,7 +73,10 @@ const setStyle = (css) => {
                   { key: 'padding-left', val: values[0] },
                 ];
               } else if (values.length === 2) {
-
+                detailcss.add({ key: 'padding-top', val: values[0] });
+                detailcss.add({ key: 'padding-right', val: values[1] });
+                detailcss.add({ key: 'padding-bottom', val: values[0] });
+                detailcss.add({ key: 'padding-left', val: values[1] });
                 data.push({ key: 'padding-top', val: values[0] });
                 data.push({ key: 'padding-right', val: values[1] });
                 data.push({ key: 'padding-bottom', val: values[0] });
@@ -91,7 +101,10 @@ const setStyle = (css) => {
               if (property === 'margin') {
                 const values = value.split(' ');
                 if (values.length === 1) {
-
+                  detailcss.add({ key: 'margin-top', val: values[0] });
+                  detailcss.add({ key: 'margin-right', val: values[0] });
+                  detailcss.add({ key: 'margin-bottom', val: values[0] });
+                  detailcss.add({ key: 'margin-left', val: values[0] });
                   data.push({ key: 'margin-top', val: values[0] });
                   data.push({ key: 'margin-right', val: values[0] });
                   data.push({ key: 'margin-bottom', val: values[0] });
@@ -130,19 +143,18 @@ const setStyle = (css) => {
                       { key: 'text-decoration-style', val: values[1] },
                     ];
                   } else {
-
+                    detailcss.add({ key: 'text-decoration-line', val: values[0] });
+                    detailcss.add({ key: 'text-decoration-style', val: values[1] });
+                    detailcss.add({ key: 'text-decoration-color', val: values[2] });
                     data.push({ key: 'text-decoration-line', val: values[0] });
                     data.push({ key: 'text-decoration-style', val: values[1] });
                     data.push({ key: 'text-decoration-color', val: values[2] });
-
                   }
                 } else
                   if (property === 'font') {
                     // function parseFont(shorthand: string): { key: string; val: string }[] {
-
                     const values = value.split(' ');
-                    const result: { key: string; val: string }[] = [];
-
+                    // const result: { key: string; val: string }[] = [];
                     let style = 'normal';
                     let weight = 'normal';
                     let size = 'medium';
@@ -171,36 +183,57 @@ const setStyle = (css) => {
                         }
                       }
                     });
-
+                    detailcss.add({ key: 'font-style', val: style });
+                    detailcss.add({ key: 'font-weight', val: weight });
+                    detailcss.add({ key: 'font-size', val: size });
+                    detailcss.add({ key: 'font-family', val: family.trim() });
                     data.push({ key: 'font-style', val: style });
                     data.push({ key: 'font-weight', val: weight });
                     data.push({ key: 'font-size', val: size });
                     data.push({ key: 'font-family', val: family.trim() });
 
-                    return result;
+                    // return result;
                   } else {
+                    detailcss.add({ key: property, val: value });
                     return [{ key: property, val: value }]
                   }
     })
+
   console.log('[]=====>', data)
 };
-function hexToRgb(hex: string): string {
+const hexToRgb = (hex: string): string => {
   // check if the input string is a valid hex color code
   if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
     return hex
     throw new Error('Invalid hexadecimal color code');
-  } else {
-    // convert the hex color code to an RGB color code
-    let c = hex.substring(1).split('');
-    if (c.length === 3) {
-      c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-    }
-    const rgb = `rgb(${parseInt(c[0] + c[1], 16)}, ${parseInt(c[2] + c[3], 16)}, ${parseInt(c[4] + c[5], 16)})`;
-    return rgb;
   }
+  // convert the hex color code to an RGB color code
+  let c = hex.substring(1).split('');
+  if (c.length === 3) {
+    c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+  }
+  const rgb = `rgb(${parseInt(c[0] + c[1], 16)}, ${parseInt(c[2] + c[3], 16)}, ${parseInt(c[4] + c[5], 16)})`;
+
+  return rgb;
 }
+// const hexToRgb = (hex: string) => {
+//   // check if the input string is a valid hex color code
+//   if (!/^#([A - Fa - f0 - 9]{ 3}){ 1, 2 } $ /.test(hex)) {
+//     return hex
+//     throw new Error('Invalid hexadecimal color code');
+//   } else {
+//     // convert the hex color code to an RGB color code
+//     let c = hex.substring(1).split('');
+//     if (c.length === 3) {
+//       c = [c[0], c[0], c[1], c[1], c[2], c[2]];
+//     }
+//     const rgb = `rgb(${parseInt(c[0] + c[1], 16)}, ${parseInt(c[2] + c[3], 16)}, ${parseInt(c[4] + c[5], 16)})`;
+//     return rgb;
+//   }
+// }
+
 const usercss = {
-  // 'background-color': 'rgb(243,243,243)',
+  'background-color': 'rgb(243,243,243)',
   'width': '320px',
   'height': '240px',
   'border-width': '5px',
@@ -228,13 +261,23 @@ const usercss = {
 };
 
 const getStyle = key => {
-  const style = Object.entries(usercss)
-    .map(([property, value]) => {
-      if (property === key) {
-        return value
-      }
-    })
-    .join('');
-  return style
+  return detailcss.getVal(key)
+
+  // console.log(detailcss.detailcss)
+  // let val = detailcss.detailcss.forEach(decl => {
+  //   const key1 = decl["key"];
+  //   const val = decl["val"];
+  //   if (key === key1) { return val; }
+  // });
+  // const style = Object.entries(usercss)
+  //   .map(([property, value]) => {
+  //     if (property === key) {
+  //       return value
+  //     }
+  //   })
+  //   .join('');
+
+  // return style
+  // return val;
 };
 export { getStyle, setStyle };
