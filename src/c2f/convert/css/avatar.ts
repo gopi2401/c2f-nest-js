@@ -10,9 +10,21 @@ const setStyle = (css) => {
       } else
         if (property === 'border') {
           const values = value.split(' ');
-          const width = values[0];
-          const style = values[1];
-          const color = values[2];
+          let width = '3px'
+          let style = 'solid';
+          let color = '#000000';
+          values.forEach((value) => {
+            if (value.endsWith('px')) {
+              width = value;
+            } else {
+              ['dashed', 'dotted', 'double', 'groove', 'hidden', 'inherit', 'inset', 'outset', 'ridge', 'none'].forEach((val) => {
+                if (val === value) {
+                  style = value
+                }
+              })
+            }
+
+          });
           detailcss.add({ key: 'border-width', val: width });
           detailcss.add({ key: 'border-style', val: style });
           detailcss.add({ key: 'border-color', val: color });
@@ -26,58 +38,46 @@ const setStyle = (css) => {
               detailcss.add({ key: 'border-bottom-left-radius', val: values[0] });
             }
             if (values.length === 2) {
-              return [
-                { key: 'border-top-left-radius', val: values[0] },
-                { key: 'border-bottom-right-radius', val: values[0] },
-                { key: 'border-top-right-radius', val: values[1] },
-                { key: 'border-bottom-left-radius', val: values[1] },
-              ];
+              detailcss.add({ key: 'border-top-left-radius', val: values[0] });
+              detailcss.add({ key: 'border-bottom-right-radius', val: values[0] });
+              detailcss.add({ key: 'border-top-right-radius', val: values[1] });
+              detailcss.add({ key: 'border-bottom-left-radius', val: values[1] });
             }
             if (values.length === 3) {
-              return [
-                { key: 'border-top-left-radius', val: values[0] },
-                { key: 'border-top-right-radius', val: values[1] },
-                { key: 'border-bottom-left-radius', val: values[1] },
-                { key: 'border-bottom-right-radius', val: values[2] },
-              ];
+              detailcss.add({ key: 'border-top-left-radius', val: values[0] });
+              detailcss.add({ key: 'border-bottom-right-radius', val: values[1] });
+              detailcss.add({ key: 'border-top-right-radius', val: values[1] });
+              detailcss.add({ key: 'border-bottom-left-radius', val: values[2] });
             }
             if (values.length === 4) {
-              return [
-                { key: 'border-top-left-radius', val: values[0] },
-                { key: 'border-top-right-radius', val: values[1] },
-                { key: 'border-bottom-right-radius', val: values[2] },
-                { key: 'border-bottom-left-radius', val: values[3] },
-              ];
+              detailcss.add({ key: 'border-top-left-radius', val: values[0] });
+              detailcss.add({ key: 'border-bottom-right-radius', val: values[1] });
+              detailcss.add({ key: 'border-top-right-radius', val: values[2] });
+              detailcss.add({ key: 'border-bottom-left-radius', val: values[3] });
             }
           } else
             if (property === 'padding') {
               const values = value.split(' ');
               if (values.length === 1) {
-                return [
-                  { key: 'padding-top', val: values[0] },
-                  { key: 'padding-right', val: values[0] },
-                  { key: 'padding-bottom', val: values[0] },
-                  { key: 'padding-left', val: values[0] },
-                ];
+                detailcss.add({ key: 'padding-top', val: values[0] });
+                detailcss.add({ key: 'padding-right', val: values[0] });
+                detailcss.add({ key: 'padding-bottom', val: values[0] });
+                detailcss.add({ key: 'padding-left', val: values[0] });
               } else if (values.length === 2) {
                 detailcss.add({ key: 'padding-top', val: values[0] });
                 detailcss.add({ key: 'padding-right', val: values[1] });
                 detailcss.add({ key: 'padding-bottom', val: values[0] });
                 detailcss.add({ key: 'padding-left', val: values[1] });
               } else if (values.length === 3) {
-                return [
-                  { key: 'padding-top', val: values[0] },
-                  { key: 'padding-right', val: values[1] },
-                  { key: 'padding-bottom', val: values[2] },
-                  { key: 'padding-left', val: values[1] },
-                ];
+                detailcss.add({ key: 'padding-top', val: values[0] });
+                detailcss.add({ key: 'padding-right', val: values[1] });
+                detailcss.add({ key: 'padding-bottom', val: values[2] });
+                detailcss.add({ key: 'padding-left', val: values[1] });
               } else {
-                return [
-                  { key: 'padding-top', val: values[0] },
-                  { key: 'padding-right', val: values[1] },
-                  { key: 'padding-bottom', val: values[2] },
-                  { key: 'padding-left', val: values[3] },
-                ];
+                detailcss.add({ key: 'padding-top', val: values[0] });
+                detailcss.add({ key: 'padding-right', val: values[1] });
+                detailcss.add({ key: 'padding-bottom', val: values[2] });
+                detailcss.add({ key: 'padding-left', val: values[3] });
               }
             } else
               if (property === 'margin') {
@@ -88,37 +88,29 @@ const setStyle = (css) => {
                   detailcss.add({ key: 'margin-bottom', val: values[0] });
                   detailcss.add({ key: 'margin-left', val: values[0] });
                 } else if (values.length === 2) {
-                  return [
-                    { key: 'margin-top', val: values[0] },
-                    { key: 'margin-right', val: values[1] },
-                    { key: 'margin-bottom', val: values[0] },
-                    { key: 'margin-left', val: values[1] },
-                  ];
+                  detailcss.add({ key: 'margin-top', val: values[0] });
+                  detailcss.add({ key: 'margin-right', val: values[1] });
+                  detailcss.add({ key: 'margin-bottom', val: values[0] });
+                  detailcss.add({ key: 'margin-left', val: values[1] });
                 } else if (values.length === 3) {
-                  return [
-                    { key: 'margin-top', val: values[0] },
-                    { key: 'margin-right', val: values[1] },
-                    { key: 'margin-bottom', val: values[2] },
-                    { key: 'margin-left', val: values[1] },
-                  ];
+                  detailcss.add({ key: 'margin-top', val: values[0] });
+                  detailcss.add({ key: 'margin-right', val: values[1] });
+                  detailcss.add({ key: 'margin-bottom', val: values[2] });
+                  detailcss.add({ key: 'margin-left', val: values[1] });
                 } else {
-                  return [
-                    { key: 'margin-top', val: values[0] },
-                    { key: 'margin-right', val: values[1] },
-                    { key: 'margin-bottom', val: values[2] },
-                    { key: 'margin-left', val: values[3] },
-                  ];
+                  detailcss.add({ key: 'margin-top', val: values[0] });
+                  detailcss.add({ key: 'margin-right', val: values[1] });
+                  detailcss.add({ key: 'margin-bottom', val: values[2] });
+                  detailcss.add({ key: 'margin-left', val: values[3] });
                 }
               } else
                 if (property === 'text-decoration') {
                   const values = value.split(' ');
                   if (values.length === 1) {
-                    return [{ key: 'text-decoration-line', val: values[0] }];
+                    detailcss.add({ key: 'text-decoration-line', val: values[0] });
                   } else if (values.length === 2) {
-                    return [
-                      { key: 'text-decoration-line', val: values[0] },
-                      { key: 'text-decoration-style', val: values[1] },
-                    ];
+                    detailcss.add({ key: 'text-decoration-line', val: values[0] });
+                    detailcss.add({ key: 'text-decoration-style', val: values[1] });
                   } else {
                     detailcss.add({ key: 'text-decoration-line', val: values[0] });
                     detailcss.add({ key: 'text-decoration-style', val: values[1] });
@@ -163,6 +155,11 @@ const setStyle = (css) => {
                   }
     })
 };
+// const colortorgb = (val) => {
+
+// }
+// let coors = '#e0e0e0'
+// colortorgb(coors)
 const hexToRgb = (hex: string): string => {
   // check if the input string is a valid hex color code
   if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
