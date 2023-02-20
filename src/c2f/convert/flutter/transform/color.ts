@@ -1,9 +1,9 @@
-import color from "color";
-
+// import color from "color";
+import * as Color from 'color';
 const toFColor = val => {
   try {
     val = typeof val === "string" ? val.trim() : val;
-    const c16 = color(val)
+    const c16 = Color(val)
       .hex()
       .replace(/^#/, "0x");
 
