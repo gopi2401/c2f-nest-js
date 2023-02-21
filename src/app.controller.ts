@@ -36,4 +36,14 @@ export class AppController {
 
     // ...
   }
+  @Post('tailwind')
+  async tailwind(@Body() data, @Req() req) {
+    if (req.readable) {
+      const raw = await rawbody(req);
+      const text = raw.toString().trim();
+      return await this.appService.get(text);
+    } else {
+      console.log('data:', data);
+    }
+  }
 }

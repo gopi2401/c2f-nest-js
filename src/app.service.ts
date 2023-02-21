@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import postcss from 'postcss';
 import { convert2Flutter } from './c2f/convert/converter';
+import { getConvertedClasses } from './c2f/convert/tailwind/helpers';
 
 @Injectable()
 export class AppService {
-  async getHello(text:string): Promise<any> {
+  async getHello(text: string): Promise<any> {
     let cssVal = `
   background-color: #e0e0e0;
   width: 320px;
@@ -22,6 +23,11 @@ export class AppService {
     //   // require("postcss-short-border-radius")()
     // ]).process(cssVal);
     // console.log(ast.css)
+    return data
+  }
+  async get(input: string): Promise<any> {
+
+    let data = getConvertedClasses(input)
     return data
   }
 }

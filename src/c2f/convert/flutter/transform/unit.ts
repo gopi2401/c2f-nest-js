@@ -37,7 +37,8 @@ const toFunit = (val: any) => {
   // like 10rem
   else if (isRem(val)) {
     val = toNum(val);
-    return `_root_font_width_ * ${val} // https://www.w3.org/Style/Examples/007/units`;
+    return `${val * 16}.0`;
+    // return `_root_font_width_ * ${val} // https://www.w3.org/Style/Examples/007/units`;
   }
 
   // like 12pt

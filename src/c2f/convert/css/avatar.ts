@@ -109,16 +109,15 @@ const setStyle = (css) => {
               } else
                 if (property === 'text-decoration') {
                   const values = value.split(' ');
-                  if (values.length === 1) {
-                    detailcss.add({ key: 'text-decoration-line', val: values[0] });
-                  } else if (values.length === 2) {
-                    detailcss.add({ key: 'text-decoration-line', val: values[0] });
-                    detailcss.add({ key: 'text-decoration-style', val: values[1] });
-                  } else {
-                    detailcss.add({ key: 'text-decoration-line', val: values[0] });
-                    detailcss.add({ key: 'text-decoration-style', val: values[1] });
-                    detailcss.add({ key: 'text-decoration-color', val: values[2] });
-                  }
+                  const decorationline = ['overline', 'line-through', 'underline']
+                  const decorationStyle = ['wavy', 'double', 'dashed', 'dotted']
+                  values.forEach((val) => {
+                    if (decorationline.includes(val)) {
+                      detailcss.add({ key: 'text-decoration-line', val: val });
+                    } else if (decorationStyle.includes(val)) {
+                      detailcss.add({ key: 'text-decoration-style', val: val });
+                    } else { detailcss.add({ key: 'text-decoration-color', val: val }); }
+                  });
                 } else
                   if (property === 'font') {
                     const values = value.split(' ');
