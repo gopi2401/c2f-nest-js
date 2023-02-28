@@ -1,4 +1,3 @@
-// import color from "color";
 import * as Color from 'color';
 const toFColor = val => {
   try {

@@ -1,4 +1,3 @@
-// import clone from "lodash/clone";
 import { clone } from "lodash";
 class Decls {
   decls: any[];

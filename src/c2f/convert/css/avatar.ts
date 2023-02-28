@@ -5,7 +5,6 @@ const setStyle = (css) => {
     .map(([property, val]) => {
       let value = `${val}`
       if (property === 'background-color') {
-        // const rgb = hexToRgb(value)
         detailcss.add({ key: 'background-color', val: value });
       } else
         if (property === 'border') {
@@ -157,20 +156,6 @@ const setStyle = (css) => {
                   }
     })
 };
-// const hexToRgb = (hex: string): string => {
-//   // check if the input string is a valid hex color code
-//   if (!/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-//     return hex
-//     throw new Error('Invalid hexadecimal color code');
-//   }
-//   // convert the hex color code to an RGB color code
-//   let c = hex.substring(1).split('');
-//   if (c.length === 3) {
-//     c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-//   }
-//   const rgb = `rgb(${parseInt(c[0] + c[1], 16)}, ${parseInt(c[2] + c[3], 16)}, ${parseInt(c[4] + c[5], 16)})`;
-//   return rgb;
-// }
 const getStyle = key => {
   return detailcss.getVal(key)
 };

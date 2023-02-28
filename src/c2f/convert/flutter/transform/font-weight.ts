@@ -1,5 +1,3 @@
-//import toNumber from "lodash/toNumber";
-
 const toFFontWeight = val => {
   if (val === "bold" || val === "normal") {
     return `FontWeight.${val}`;

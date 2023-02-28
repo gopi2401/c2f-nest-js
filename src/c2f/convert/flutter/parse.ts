@@ -14,11 +14,8 @@ export function parseFlutter(decls:any) {
   if (!decls || decls.isNull()) return "";
 
   let widget = new Widget("container");
-  console.log('parseFlutter widget==> ', widget)
   widget.decls = decls;
-  console.log('parseFlutter widget.decls css==> ', widget.decls)
   const widgetManager = new WidgetManager();
-  console.log('parseFlutter widgetManager==> ', widgetManager)
   decls.forEach((decl, index) => {
     let key = decl["key"];
     let val = decl["val"];
@@ -70,7 +67,6 @@ export function parseFlutter(decls:any) {
     // text
     else if (isText(key)) {
       const child = widgetManager.get({ target: "child", type: "text" });
-      console.log(' child widget===>', child);
       const keys = ["text-align"];
       if (keys.indexOf(key) > -1) {
         child.setProp2(key, val);

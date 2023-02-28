@@ -26,33 +26,21 @@ const convertToCss = (classNames: string[]) => {
   let cssCode = ``;
   console.log('CheatSheet==>', CheatSheet);
   CheatSheet.forEach((element) => {
-    // console.log('CheatSheet.ForEach==>', element);
     console.log('',);
 
     element.content.forEach((content) => {
-      // console.log(' element.content.forEach==>', content);
-
       content.table.forEach((list) => {
-        // console.log('content.table.forEach==>', list);
-        console.log('classNames.includes(list[0])', list[0]);
         if (classNames.includes(list[0])) {
           const semicolon = list[1][list[1].length - 1] !== ";" ? ";" : "";
-          console.log('semicolon==>', semicolon);
-          console.log('list.length === 3', list.length === 3);
           if (list.length === 3)
             cssCode += `${list[1]}${semicolon} \n`;
           else cssCode += `${list[2]}${semicolon} \n`;
         }
-        console.log('classNames.includes(list[1])', list[1]);
         if (classNames.includes(list[1])) {
           const semicolon = list[2][list[2].length - 1] !== ";" ? ";" : "";
-          console.log('semicolon [1]', semicolon);
-
           cssCode += `${list[2]}${semicolon} \n`;
         }
       });
-      console.log('cssCode====>', cssCode);
-
     });
   });
 

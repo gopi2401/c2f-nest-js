@@ -11,7 +11,6 @@ const splitCssAttr = decls => {
   if (!decls) return null;
 
   let cloneDecls = decls.clone();
-  console.log('splitCssAttr cloneDecls==>>', cloneDecls)
   for (let mainStyle in SPLIT_MAPPING) {
     cloneDecls = splitByMainStyle(cloneDecls, mainStyle, SPLIT_MAPPING[mainStyle]);
   }
@@ -20,12 +19,9 @@ const splitCssAttr = decls => {
 };
 
 const splitByMainStyle = (decls, mainStyle, subStyles = []) => {
-  console.log('splitByMainStyle', mainStyle)
   const val = decls.getVal(mainStyle);
-  console.log("decls.getVal", val)
   if (val) {
     const allStyle = getAllStyle(decls);
-    console.log("getAllStyle", allStyle)
     setStyle(allStyle);
     subStyles.forEach(style => addValToDecls(decls, style));
     decls.remove(mainStyle);

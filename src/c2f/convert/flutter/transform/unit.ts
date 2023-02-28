@@ -1,7 +1,4 @@
-import isNumber from "lodash/isNumber";
-// import { isNumber } from "lodash";
 import { isInteger } from "lodash";
-// import isInteger from "lodash/isInteger";
 import { toNum } from "../../../utils/num";
 import { isNumerical, isPercentage, isPixel, isEm, isRem, isPt } from "../../../utils/unit";
 

@@ -1,6 +1,4 @@
-import ppo from "ppo";
 import toNumber from "lodash/toNumber";
-import isNumber from "lodash/isNumber";
 
 const isMulti = key => {
   if (key.indexOf("|") > 0) return true;
