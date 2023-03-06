@@ -8,7 +8,7 @@ const toBoxShadow = val => {
   val = replaceRbga2Sign(val);
   const arr = val.split(",");
   for (let i = 0; i < arr.length; i++) {
-    const shadowStr = replaceSign2Rgba(trim(arr[i]));
+    const shadowStr = replaceSign2Rgba(arr[i].trim());
     const shadow = createBoxShadow(shadowStr);
     shadows += "\n" + shadow;
   }

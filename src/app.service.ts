@@ -17,7 +17,7 @@ export class AppService {
   border-radius: 10px;
   text-decoration: underline wavy red;
       `
-    let data = convert2Flutter(text)
+    let data = await convert2Flutter(text)
     // const ast = await postcss([
     //   require("postcss-transform-shortcut")({})
     //   // require("postcss-short-border-radius")()

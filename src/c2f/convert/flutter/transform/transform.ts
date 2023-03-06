@@ -4,7 +4,7 @@ import { toNum, toRadian } from "../../../utils/num";
 
 // skewX(25deg) rotate3d(180deg,0,1) scale3d(2,2,1) translate3d(10px,10px,0px);
 const toFTransform = val => {
-  val = trim(val);
+  val = val.trim();
   if (/^matrix/gi.test(val)) {
     return val.replace("matrix", "Matrix4");
   } else {
