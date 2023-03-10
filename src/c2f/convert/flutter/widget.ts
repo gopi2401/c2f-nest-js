@@ -127,8 +127,7 @@ class Widget {
     let { key, val } = transform(okey, oval, this.decls);
     if (!key) return;
 
-    const code =
-      this.type === "text" ? `    ${key}: ${val},` : `${key}: ${val},`;
+    const code = this.type === "text" ? `    ${key}: ${val},` : `${key}: ${val},`;
     this.prop.add(key, code);
   }
 
